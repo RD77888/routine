@@ -1,0 +1,9 @@
+# 忽略 IDE 配置文件
+.vscode/
+.idea/
+
+# 忽略操作系统生成的文件
+.DS_Store
+Thumbs.db
+*.log
+*.[oa]
