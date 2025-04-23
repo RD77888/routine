@@ -5,27 +5,19 @@ CXX = g++               # 指定使用g++编译器
 CXXFLAGS = -std=c++11 -Wall -Wextra  # 编译选项：C++11标准、显示所有警告
 LDFLAGS = -pthread      # 链接选项：链接pthread库，必须用于多线程程序
 
-# 目标和依赖关系
-TARGET = simpleconditionvar
-SRCS = simpleconditionvar.cpp
-OBJS = $(SRCS:.cpp=.o)
+# 所有可执行目标 
+TARGETS = simpleconditionvar conditionwait notify notify_all
 
-# 默认目标
-all: $(TARGET)                        # 默认目标依赖于最终可执行文件
+# 默认目标 - 编译所有程序
+all: $(TARGETS)
 
-# 编译规则
-$(TARGET): $(OBJS)                    # 可执行文件依赖于.o文件
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)  
-    # 链接.o文件生成可执行文件
-
-# 生成目标文件的规则
-%.o: %.cpp                            # 模式规则：每个.o文件依赖于对应的.cpp文件
-	$(CXX) $(CXXFLAGS) -c $< -o $@    
-    # 编译.cpp生成.o文件
+# 每个cpp文件编译成对应的可执行文件
+%: %.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $< $(LDFLAGS)
 
 # 清理生成的文件
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(TARGETS)
 
 # 调试版本
 debug: CXXFLAGS += -g -DDEBUG
